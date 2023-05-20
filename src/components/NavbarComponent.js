@@ -1,52 +1,75 @@
-const NavbarComponent = () => {
+import React from 'react';
+import '../styles/sidebar.css';
+import '../styles/navbar.css';
+export const NavbarComponent = (props) => {
     return (
-        <nav className="navbar bg-dark" data-bs-theme="dark">
-            <div className="container-fluid">
-                <div className="collapse" id="navbarToggleExternalContent">
-                    <div className="bg-dark p-4">
-                        <h5 className="text-white h4">Collapsed content</h5>
-                        <span className="text-body-secondary">Toggleable via the navbar brand.</span>
-                    </div>
-                </div>
-                <nav className="navbar navbar-dark bg-dark">
-                    <div className="container-fluid">
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                </nav>
-                <a className="navbar-brand">Navbar</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" >Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" >Link</a>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </a>
-                            <ul className="dropdown-menu">
-                                <li><a className="dropdown-item">Action</a></li>
-                                <li><a className="dropdown-item">Another action</a></li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li><a className="dropdown-item">Something else here</a></li>
-                            </ul>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled">Disabled</a>
-                        </li>
-                    </ul>
 
+        <nav className="custom-nav py-xs gap-1 bg-smoke">
+            <div className="d-flex jc-fs txt-dark ai-c f-15x">
+                <div className="px-xs">
+                    {props.menuNavbar ? (<div className="d-flex ai-c jc-fs px-xs py-xs menu menu-btn bdr-rad-md" onClick={() => props.handleClickNavbar(!props.menuNavbar)}>
+                        <span className="material-symbols-outlined">close</span>
+                    </div>) :
+                        (<div className="d-flex ai-c jc-fs px-xs py-xs menu menu-btn bdr-rad-md" onClick={() => props.handleClickNavbar(!props.menuNavbar)}>
+                            <span className="material-symbols-outlined">menu</span>
+                        </div>)}
+                </div>
+                <div>
+                    <div className='brand'>
+                        <span className="txt-over ta-l">CSC</span>
+                        <span className=" f-w-700 txt-dark ta-l txt-metal">API</span>
+                    </div>
                 </div>
             </div>
-        </nav >
+
+            <div className="d-flex ai-c px-md">
+                <div className="tabs-wrapper">
+                    <button id="one" className="nav-link">
+                        <span className="tab-content">
+                            <span className="text-label">
+                                Home
+                            </span>
+                        </span>
+                    </button>
+                </div>
+                <div className="tabs-wrapper">
+                    <button id="two" className="nav-link">
+                        <span className="tab-content">
+                            <span className="text-label">
+                                Demo
+                            </span>
+                        </span>
+                    </button>
+                </div>
+                <div className="tabs-wrapper">
+                    <button id="three" className="nav-link">
+                        <span className="tab-content">
+                            <span className="text-label">
+                                Github
+                            </span>
+                        </span>
+                    </button>
+                </div>
+                <div className="tabs-wrapper">
+                    <button id="four" className="nav-link">
+                        <span className="tab-content">
+                            <span className="text-label">
+                                Playground
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+
+        </nav>
+
     );
 };
 
-export default NavbarComponent;
+
+// {props.menuSidebar && (
+//     <button className="btn-menu btn-menu-close" onClick={() => props.handleClickSidebar(!props.menuSidebar)}>
+//         <span className="material-symbols-outlined">close</span>
+//     </button>
+// )}
