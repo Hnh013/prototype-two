@@ -13,39 +13,19 @@ export const SidebarComponent = (props) => {
                     )}
                     <div className='py-lg'>
                         <div className='py-lg'>
-                            <div className="px-xs gap-1 d-flex fd-col txt-metal-dark">
-                                <div className="f-15x f-w-600">Docs</div>
-                                <div className="f-11x f-w-600">Subtitle</div>
+                            <div className="px-xs gap-1 d-flex fd-col txt-metal">
+                                <div className="f-15x f-w-600">Documentation</div>
+                                <div className="f-11x f-w-600"></div>
                             </div>
-                            <div className="drawer-content-sm">
-                                <div className="drawer-list">
-                                    <a href="https://www.google.com" className="drawer-link drawer-list-item f-w-500 txt-metal-dark">
-                                        <span className="drawer-icon material-symbols-outlined">book</span>
-                                        All Countries
+                            <div className="">
+                                <div className="d-flex fd-col gap-1">
+                                    <a href="https://www.google.com" className="d-flex ai-c f-w-600 txt-metal-dark">
+                                        <span className="txt-metal material-symbols-outlined px-xs">captive_portal</span>
+                                        <span className="txt-over">Fetch All Countries</span>
                                     </a>
-                                    <a href="https://www.google.com" className="drawer-link drawer-list-item f-w-500 txt-metal-dark">
-                                        <span className="drawer-icon material-symbols-outlined">book</span>
-                                        Country Details
-                                    </a>
-                                    <a href="https://www.google.com" className="drawer-link drawer-list-item f-w-500 txt-metal-dark">
-                                        <span className="drawer-icon material-symbols-outlined">book</span>
-                                        States By Country
-                                    </a>
-                                    <a href="https://www.google.com" className="drawer-link drawer-list-item f-w-500 txt-metal-dark">
-                                        <span className="drawer-icon material-symbols-outlined">book</span>
-                                        State Details
-                                    </a>
-                                    <a href="https://www.google.com" className="drawer-link drawer-list-item f-w-500 txt-metal-dark">
-                                        <span className="drawer-icon material-symbols-outlined">book</span>
-                                        City by State and Country
-                                    </a>
-                                    <a href="https://www.google.com" className="drawer-link drawer-list-item f-w-500 txt-metal-dark">
-                                        <span className="drawer-icon material-symbols-outlined">book</span>
-                                        City By Country
-                                    </a>
-                                    <a href="https://www.google.com" className="drawer-link drawer-list-item f-w-500 txt-metal-dark">
-                                        <span className="drawer-icon material-symbols-outlined">book</span>
-                                        City Details
+                                    <a href="https://www.google.com" className="d-flex ai-c f-w-600 txt-metal-dark">
+                                        <span className="txt-metal material-symbols-outlined px-xs">captive_portal</span>
+                                        <span className="txt-over">Fetch Country Details</span>
                                     </a>
                                 </div>
                             </div>

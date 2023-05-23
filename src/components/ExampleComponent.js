@@ -9,7 +9,7 @@ const ExampleComponent = ({ code, language }) => {
     return (
 
 
-        <div className="d-flex jc-fs">
+        <div className="">
             <pre>
                 <code className={`language-${language}`}>{code}</code>
             </pre>

@@ -1,174 +1,252 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { allCountries } from '../sampleData/countryData';
+import '../styles/doc.css';
+
+import ExampleComponent from './ExampleComponent';
+
 
 export const DocComponent = () => {
-    const [countryData, setCountryData] = useState({ loading: true, data: [], stateData: [], cityData: [], isoCountry: '', isoState: '' });
 
-    const [inputs, setInputs] = useState({ country: '', city: '', state: '' });
+    const jsex =
+        `
+    var axios = require('axios');
 
-    const handleInputs = (e) => {
-        const { name, value } = e.target;
-        setInputs({ ...inputs, [name]: value })
+    var config = {
+        method: 'get',
+        url: 'https://api.countrystatecity.in/v1/countries',
+        headers: { 'X-CSCAPI-KEY': 'API_KEY' }
+        };
+        
+    axios(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+    `;
+
+    const jsex2 =
+        `   
+    [
+        {
+          "id": 101,
+          "name": "India",
+          "iso2": "IN"
+        },
+        ...
+    ]
+    `;
+    const jsex3 =
+        `
+    {
+        "error'": "Unauthorized. You shouldn't be here."
     }
+    `;
 
-    const [alerts, setAlerts] = useState({ warn: 'alert alert-warning alert-dismissible fade show d-none', danger: 'alert alert-danger alert-dismissible fade show d-none' })
+    const jsex4 =
+        `
+        var axios = require('axios');
 
-    const hideShowAlert = (type, hide = true) => {
-        type === 'warn' ? !hide ? setAlerts({ ...alerts, warn: alerts.warn.split(' ').slice(0, -1).join(' ') }) : setAlerts({ ...alerts, danger: alerts.warn + ' d-none' }) : !hide ? setAlerts({ ...alerts, danger: alerts.warn.split(' ').slice(0, -1).join(' ') }) : setAlerts({ ...alerts, danger: alerts.danger + ' d-none' });
-    }
+        var config = {
+            method: 'get',
+            url: 'https://api.countrystatecity.in/v1/countries/IN',
+            headers: {
+              'X-CSCAPI-KEY': 'API_KEY'
+            }
+        };
 
-    // const APIcall = () => {
+        axios(config)
+        .then(function (response) {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    `;
 
-    //     setCountryData({ loading: false, data: [] })
-    //     var config = {
-    //         method: 'get',
-    //         url: 'https://api.countrystatecity.in/v1/countries',
-    //         headers: {
-    //             'X-CSCAPI-KEY': 'SHpyMnNLakRodnlTaHVvQ09ZekxsN2dSYW9rNU9uY3h5M1hiZ2cyOQ=='
-    //         }
-    //     };
-
-    //     axios(config)
-    //         .then(function (response) {
-    //             const responseData = response.data;
-    //             setCountryData({ loading: false, data: responseData })
-    //         })
-    //         .catch(function (error) {
-    //             setCountryData({ loading: false, data: [{ "id": "1", "name": "Error" }] })
-    //         });
-    // };
-
-    const searchGeo = (entity) => {
-        if (entity === 'country') {
-            let currentcountry = inputs.country.toLowerCase();
-            let isoCode = [...countryData.data].find(country => country.name.toLowerCase() === currentcountry);
-            isoCode ? APIcallState(isoCode.iso2) : hideShowAlert('warn', false);
-        } else {
-            let currentstate = inputs.state.toLowerCase();
-            let isoCode = [...countryData.stateData].find(state => state.name.toLowerCase() === currentstate);
-            isoCode ? APIcallCity(isoCode.iso2) : hideShowAlert('warn', false);
-
+    const jsex5 =
+        `
+        {
+            "id": 101,
+            "name": "India",
+            "iso3": "IND",
+            "iso2": "IN",
+            "phonecode": "91",
+            "capital": "New Delhi",
+            "currency": "INR",
+            "native": "भारत",
+            "emoji": "🇮🇳",
+            "emojiU": "U+1F1EE U+1F1F3"
         }
-    }
+    `;
 
-    const APIcallState = (countryISOCode) => {
+    const jsex6 =
+        `
+        {
+            "error'": "Unauthorized. You shouldn't be here."
+        }
+    `;
 
-        setCountryData({ ...countryData })
-        var config = {
-            method: 'get',
-            url: `https://api.countrystatecity.in/v1/countries/${countryISOCode}/states`,
-            headers: {
-                'X-CSCAPI-KEY': 'SHpyMnNLakRodnlTaHVvQ09ZekxsN2dSYW9rNU9uY3h5M1hiZ2cyOQ=='
-            }
-        };
-
-        axios(config)
-            .then(function (response) {
-                const responseData = response.data;
-                setCountryData({ ...countryData, loading: false, isoCountry: countryISOCode, stateData: responseData, cityData: [] });
-            })
-            .catch(function (error) {
-                setCountryData({ ...countryData, loading: false, stateData: [] })
-                hideShowAlert('danger', false);
-            });
-    };
-
-    const APIcallCity = (stateISOCode) => {
-        console.log(countryData.isoCountry);
-        setCountryData({ ...countryData })
-        var config = {
-            method: 'get',
-            url: `https://api.countrystatecity.in/v1/countries/${countryData.isoCountry}/states/${stateISOCode}/cities`,
-            headers: {
-                'X-CSCAPI-KEY': 'SHpyMnNLakRodnlTaHVvQ09ZekxsN2dSYW9rNU9uY3h5M1hiZ2cyOQ=='
-            }
-        };
-
-        axios(config)
-            .then(function (response) {
-                const responseData = response.data;
-                setCountryData({ ...countryData, loading: false, cityData: responseData, isoState: stateISOCode })
-            })
-            .catch(function (error) {
-                setCountryData({ ...countryData, loading: false, cityData: [] })
-                hideShowAlert('danger', false);
-            });
-    };
-
-    useEffect(() => {
-        setCountryData({ ...countryData, loading: false, data: [...allCountries] });
-    }, []);
+    const jsex7 =
+        `
+        {
+            "error'": "Country not found."
+        }
+    `;
 
     return (
-        <>
-            <div className="container overflow-hidden text-center">
-                <div className="gx-2 p-2 bg-light d-flex flex-column flex-md-row justify-content-between">
-                    <div className=" flex-shrink-1 p-3">
-                        <div className='p-2 border border-dark rounded'>
-                            <p>Country</p>
-                            <hr />
-                            <div className='d-flex'>
-                                <input className="form-control" value={inputs.country} name='country' onChange={(e) => handleInputs(e)} type="text" placeholder="Default input" aria-label="default input example" />
-                                <button className='btn btn-success btn-sm' onClick={() => searchGeo('country')}><i className="bi bi-search"></i></button></div>
-                        </div>
-                        {countryData.data.length &&
-                            <table className='table table-striped d-none d-md-block'>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Country</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {countryData.data.map(country => <tr key={country.id}><th scope="row" >{country.iso2}</th><td>{country.name}</td><td><button className='btn btn-sm btn-primary' onClick={() => APIcallState(country.iso2)} ><i className="bi bi-search"></i></button></td></tr>)}
-                                </tbody>
-                            </table>}
+        <div className=''>
+            <div className='px-xs'>
+                <section id="fetch-countries" className='px-sm py-xs d-flex fd-col gap-1'>
+                    <div title="fetch-countries-section-heading px-xs" className=''>
+                        <div className='txt-metal f-2x f-w-700'>Fetch All Countries</div>
                     </div>
-                    <div className=" flex-shrink-1 p-3">
-                        <div className='p-2 border border-dark rounded'>
-                            <p>State</p>
-                            <hr />
-                            <div className='d-flex'>
-                                <input className="form-control" value={inputs.state} name='state' onChange={(e) => handleInputs(e)} type="text" placeholder="Default input" aria-label="default input example" />
-                                <button className='btn btn-success btn-sm' onClick={() => searchGeo('state')}><i className="bi bi-search"></i></button></div>
-                        </div>
-                        {countryData.stateData && countryData.stateData.length ?
-                            <table className='table table-striped'>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">State</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {countryData.stateData.map(country => <tr key={country.id}><th scope="row">{country.iso2}</th><td>{country.name}</td><td><button className='btn btn-sm btn-primary' onClick={() => APIcallCity(country.iso2)} ><i className="bi bi-search"></i></button></td></tr>)}
-                                </tbody>
-                            </table> : <div>No Data</div>}
+                    <div title="fetch-countries-section-subheading" className=''>
+                        <div className='txt-metal-dark f-w-600 f-15x'>Get a list of all the countries</div>
                     </div>
-                    <div className="flex-shrink-1 p-3">
-                        <div className='p-2 border border-dark rounded'>
-                            <p>City</p>
-                            <hr />
-                            <input className="form-control" type="text" placeholder="Default input" aria-label="default input example" />
+                    <div title="fetch-countries-section-api-url" className='d-flex ai-c' >
+                        <div>
+                            <span className='bg-metal-dark bdr-rad-sm txt-smoke f-w-600 px-xs py-xs'>GET</span>
                         </div>
-
-                        {countryData.cityData && countryData.cityData.length ?
-                            <table className='table table-striped'>
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">City</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {countryData.cityData.map(country => <tr key={country.id}><th scope="row">{country.id}</th><td>{country.name}</td></tr>)}
-                                </tbody>
-                            </table> : <div>No Data</div>}
+                        <div>
+                            <span className='f-w-600 px-xs'>https://api.countrystatecity.in/v1/countries</span>
+                        </div>
                     </div>
-                </div>
+                    <div title="fetch-countries-content" className='txt-over d-flex fd-col gap-1 py-md'>
+                        <div title="fetch-countries-security">
+                            <div className='f-w-600 f-11x txt-metal'>Security</div>
+                            <div>
+                                <div>This api use API KEY as an authentication method.</div>
+                                <div>
+                                    <table>
+                                        <thead><tr><th>WHAT</th><th>:</th><td>API Key</td></tr></thead>
+                                        <tbody><tr><th>WHERE</th><th>:</th><td>Header</td></tr></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div title="fetch-countries-request-params">
+                            <div className='f-w-600 f-11x txt-metal'>Request Parameters</div>
+                            <div>No Parameters</div>
+                        </div>
+                        <div title="fetch-countries-response">
+                            <div className='f-w-600 f-11x txt-metal'>Response</div>
+                            <div>
+                                <div>This api use API KEY as an authentication method.</div>
+                                <div>
+                                    <table>
+                                        <thead><tr><th>CODE</th><th>&nbsp;</th><th>DESCRIPTION</th></tr></thead>
+                                        <tbody>
+                                            <tr><th>200</th><th>:</th><td>Return a list of countries</td></tr>
+                                            <tr><th>401</th><th>:</th><td>Unauthorized</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div title="fetch-countries-usage-examples">
+                            <div className='f-w-600 f-11x txt-metal'>Example Usage</div>
+                            <div>
+                                <ExampleComponent code={jsex} language="javascript" />
+                            </div>
+                        </div>
+                        <div title="fetch-countries-success-response">
+                            <div className='f-w-600 f-11x txt-metal'>Example Success Response</div>
+                            <div>
+                                <ExampleComponent code={jsex2} language="javascript" />
+                            </div>
+                        </div>
+                        <div title="fetch-countries-failure-response">
+                            <div className='f-w-600 f-11x txt-metal'>Example Failure Response</div>
+                            <div>
+                                <ExampleComponent code={jsex3} language="javascript" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="fetch-country-details" className='px-sm py-xs d-flex fd-col gap-1'>
+                    <div title="fetch-country-details-section-heading px-xs" className=''>
+                        <div className='txt-metal f-2x f-w-700'>Fetch Country Details</div>
+                    </div>
+                    <div title="fetch-country-details-section-subheading" className=''>
+                        <div className='txt-metal-dark f-w-600 f-15x'>Get Country Details From ISO2 Code</div>
+                    </div>
+                    <div title="fetch-country-details-section-api-url" className='d-flex ai-c gap-1' style={{ 'flexWrap': 'wrap' }} >
+                        <div>
+                            <span className='bg-metal-dark bdr-rad-sm txt-smoke f-w-600 px-xs py-xs'>GET</span>
+                        </div>
+                        <div className='py-xs'>
+                            <span className='f-w-600 px-xs py-xs'>https://api.countrystatecity.in/v1/countries/[ciso]</span>
+                        </div>
+                    </div>
+                    <div title="fetch-country-details-content" className='txt-over d-flex fd-col gap-1 py-md'>
+                        <div title="fetch-country-details-security">
+                            <div className='f-w-600 f-11x txt-metal'>Security</div>
+                            <div>
+                                <div>This api use API KEY as an authentication method.</div>
+                                <div>
+                                    <table>
+                                        <thead><tr><th>WHAT</th><th>:</th><td>API Key</td></tr></thead>
+                                        <tbody><tr><th>WHERE</th><th>:</th><td>Header</td></tr></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div title="fetch-country-details-request-params">
+                            <div className='f-w-600 f-11x txt-metal'>Request Parameters</div>
+                            <div>
+                                <table>
+                                    <thead>
+                                        <tr><th>Name</th><th>Located in</th><th>Description</th><th>Required</th><th>Type</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>[ciso]</td><td>URL</td><td>ISO2 Code of Country</td><td>Required</td><td>string</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div title="fetch-country-details-response">
+                            <div className='f-w-600 f-11x txt-metal'>Response</div>
+                            <div>
+                                <div>This api use API KEY as an authentication method.</div>
+                                <div>
+                                    <table>
+                                        <thead><tr><th>CODE</th><th>&nbsp;</th><th>DESCRIPTION</th></tr></thead>
+                                        <tbody>
+                                            <tr><th>200</th><th>:</th><td>Return a list of countries</td></tr>
+                                            <tr><th>401</th><th>:</th><td>Unauthorized</td></tr>
+                                            <tr><th>404</th><th>:</th><td>Not Found</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div title="fetch-country-details-usage-examples">
+                            <div className='f-w-600 f-11x txt-metal'>Example Usage</div>
+                            <div>
+                                <ExampleComponent code={jsex4} language="javascript" />
+                            </div>
+                        </div>
+                        <div title="fetch-country-details-success-response">
+                            <div className='f-w-600 f-11x txt-metal'>Example Success Response</div>
+                            <div>
+                                <ExampleComponent code={jsex5} language="javascript" />
+                            </div>
+                        </div>
+                        <div title="fetch-country-details-failure-response">
+                            <div className='f-w-600 f-11x txt-metal'>Example Failure Response</div>
+                            <div>
+                                <ExampleComponent code={jsex6} language="javascript" />
+                            </div>
+                        </div>
+                        <div title="fetch-country-details-failure-response">
+                            <div className='f-w-600 f-11x txt-metal'>Example Not Found Response</div>
+                            <div>
+                                <ExampleComponent code={jsex7} language="javascript" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </>
-    )
-
-}
+        </div>
+    );
+};
