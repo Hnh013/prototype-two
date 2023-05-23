@@ -17,8 +17,8 @@ function App() {
       <SidebarComponent menuSidebar={menuMain} handleClickSidebar={handleClickMain} />
       <HeaderComponent />
       <LandingComponent />
-      <DemoComponent />
       <DocComponent />
+      <DemoComponent />
       <FooterComponent />
     </>
   )
